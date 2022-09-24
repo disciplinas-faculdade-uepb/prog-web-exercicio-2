@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+
+  backend:
+    restart: always
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    command: mvn clean package spring-boot:run -DskipTests
+    environment:
+      SPRING.DATASOURCE.URL: jdbc:postgresql://bd:5432/postgres
+      SPRING.DATASOURCE.USERNAME: postgres
+      SPRING.DATASOURCE.PASSWORD: mysecretpassword
+    ports:
+      - 8080:8080
+    depends_on:
+      - bd
+    networks:
+      - network
+  
+  bd:
+    image: postgres:14.1
+    container_name: postgres-db
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+      - TZ=America/Sao_Paulo
+    ports:
+      - 5433:5432
+    volumes:
+      - .database:/var/lib/postgresql/data
+    networks:
+      - network
+  
+  pgadmindb:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=frodo@bolseiro.com
+      - PGADMIN_DEFAULT_PASSWORD=mellon
+    ports:
+      - 16543:80
+    depends_on:
+      - bd
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
