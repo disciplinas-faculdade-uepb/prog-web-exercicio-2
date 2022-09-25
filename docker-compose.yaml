@@ -9,9 +9,9 @@ services:
       dockerfile: Dockerfile
     command: mvn clean package spring-boot:run -DskipTests
     environment:
-      SPRING.DATASOURCE.URL: jdbc:postgresql://bd:5432/postgres
-      SPRING.DATASOURCE.USERNAME: postgres
-      SPRING.DATASOURCE.PASSWORD: mysecretpassword
+      SPRING_DATASOURCE_URL: jdbc:postgresql://bd:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: mysecretpassword
     ports:
       - 8080:8080
     depends_on:
