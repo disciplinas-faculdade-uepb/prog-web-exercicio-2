@@ -16,7 +16,7 @@ docker-compose up -d pgadmindb
 ### Container da aplicação
 
 ```
-docker-compose up backend
+docker-compose up --build backend
 ```
 
 ## Rotas Insomnia
